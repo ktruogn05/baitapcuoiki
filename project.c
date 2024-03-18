@@ -31,7 +31,7 @@ void nhapThongTinSinhVien(struct Student *sv) {
     scanf("%f", &sv->diemVan);
     printf("Nhap diem Anh Van: ");
     scanf("%f", &sv->diemAnhVan);
-    getchar();
+    getchar(); // Xóa ký tự dòng mới từ bộ đệm đầu vào
 }
 
 // Hàm hiển thị thông tin của một sinh viên
