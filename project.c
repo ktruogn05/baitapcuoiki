@@ -20,7 +20,9 @@ int soLuongSV = 0;
 // Hàm nhập thông tin của một sinh viên từ bàn phím
 void nhapThongTinSinhVien(struct Student *sv) {
     printf("Nhap ho ten: ");
-    scanf("%s", sv->hoTen);
+    getchar(); // Xóa ký tự dòng mới từ bộ đệm đầu vào
+    fgets(sv->hoTen, sizeof(sv->hoTen), stdin);
+    sv->hoTen[strcspn(sv->hoTen, "\n")] = '\0'; // Xóa ký tự dòng mới nếu có
     printf("Nhap ma so sinh vien: ");
     scanf("%s", sv->maSV);
     printf("Nhap diem Toan: ");
@@ -48,7 +50,7 @@ void hienThiDanhSachSinhVien() {
         return;}
     printf("Danh sach sinh vien:\n");
     for (int i = 0; i < soLuongSV; ++i) {
-        printf("Sinh vien thu %d:\n", i + 1);
+        printf("===Sinh vien thu %d:===\n", i + 1);
         hienThiThongTinSinhVien(danhSachSV[i]);
         printf("\n");
     }
@@ -123,9 +125,9 @@ void luuDanhSachSinhVienVaoFile(char *tenFile) {
         printf("Khong mo duoc file de ghi!\n");
         return;
     }
-    fprintf(file, "Danh sach sinh vien:\n");
+    fprintf(file, "===Danh sach sinh vien:===\n");
     for (int i = 0; i < soLuongSV; i++) {
-        fprintf(file, "Sinh vien %d:\n", i + 1);
+        fprintf(file, "-Sinh vien %d:\n", i + 1);
         fprintf(file, "Ho ten: %s\n", danhSachSV[i].hoTen);
         fprintf(file, "Ma so sinh vien: %s\n", danhSachSV[i].maSV);
         fprintf(file, "Diem Toan: %.2f\n", danhSachSV[i].diemToan);
@@ -181,7 +183,7 @@ int main() {
 
         switch (choice) {
             case 1:
-                printf("Nhap thong tin cho sinh vien moi:\n");
+                printf("-Nhap thong tin cho sinh vien moi:\n");
                 nhapThongTinSinhVien(&danhSachSV[soLuongSV]);
                 soLuongSV++;
                 break;
@@ -189,35 +191,35 @@ int main() {
                 hienThiDanhSachSinhVien();
                 break;
             case 3:
-                printf("Nhap ma so sinh vien can tim: ");
+                printf("-Nhap ma so sinh vien can tim: ");
                 scanf("%s", maSV);
                 timKiemSinhVien(maSV);
                 break;
             case 4:
-                printf("Nhap ma so sinh vien can sua: ");
+                printf("-Nhap ma so sinh vien can sua: ");
                 scanf("%s", maSV);
                 suaThongTinSinhVien(maSV);
                 break;
             case 5:
-                printf("Nhap ma so sinh vien can xoa: ");
+                printf("-Nhap ma so sinh vien can xoa: ");
                 scanf("%s", maSV);
                 xoaSinhVien(maSV);
                 break;
             case 6:
-                printf("Diem trung binh cua toan bo danh sach sinh vien: %.2f\n", tinhDiemTrungBinhDanhSach());
+                printf("-Diem trung binh cua toan bo danh sach sinh vien: %.2f\n", tinhDiemTrungBinhDanhSach());
                 break;
             case 7:
-                printf("Nhap ten file de luu danh sach sinh vien: ");
+                printf("-Nhap ten file de luu danh sach sinh vien: ");
                 scanf("%s", tenFile);
                 luuDanhSachSinhVienVaoFile(tenFile);
                 break;
             case 8:
-                printf("Nhap ten file de doc danh sach sinh vien: ");
+                printf("-Nhap ten file de doc danh sach sinh vien: ");
                 scanf("%s", tenFile);
                 docDanhSachSinhVienTuFile(tenFile);
                 break;
             case 9:
-                printf("Ban co chac chan muon thoat? (Y/N): ");
+                printf("-Ban co chac chan muon thoat? (Y/N): ");
                 scanf(" %c", &exitChoice);
                 if (exitChoice == 'Y' || exitChoice == 'y') {
                     printf("Tam biet!\n");
@@ -225,9 +227,9 @@ int main() {
                 }
                 break;
             default:
-                printf("Lua chon khong hop le. Vui long chon lai.\n");
+                printf("==Lua chon khong hop le. Vui long chon lai==\n");
         }
-        printf("Nhan phim bat ky de tro ve MENU...");
+        printf("Nhan phim bat ky de tro ve MENU:...");
         getchar(); // Xóa ký tự dòng mới từ bộ đệm đầu vào
         getchar(); // Chờ nhập phím bất kỳ
     } while (1);
