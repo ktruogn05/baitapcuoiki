@@ -145,12 +145,14 @@ void docDanhSachSinhVienTuFile(char *tenFile) {
         printf("Khong mo duoc file de doc!\n");
         return;
     }
-    while (fscanf(file, "%s %s %f %f %f", danhSachSV[soLuongSV].hoTen, danhSachSV[soLuongSV].maSV, &danhSachSV[soLuongSV].diemToan, &danhSachSV[soLuongSV].diemVan, &danhSachSV[soLuongSV].diemAnhVan) == 5) {
+        while (fscanf(file, "%[^\n]%*c", danhSachSV[soLuongSV].hoTen) != EOF) {
+        fscanf(file, "%s\n%f\n%f\n%f\n", danhSachSV[soLuongSV].maSV,
+               &danhSachSV[soLuongSV].diemToan,
+               &danhSachSV[soLuongSV].diemVan,
+               &danhSachSV[soLuongSV].diemAnhVan);
         soLuongSV++;
-        if (soLuongSV >= MAX_STUDENTS) {
-            break;
-        }
-    }
+    } 
+    
     fclose(file);
     printf("Da doc danh sach sinh vien tu file %s\n", tenFile);
 }
