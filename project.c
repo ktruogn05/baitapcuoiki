@@ -31,7 +31,7 @@ void nhapThongTinSinhVien(struct Student *sv) {
     scanf("%f", &sv->diemVan);
     printf("Nhap diem Anh Van: ");
     scanf("%f", &sv->diemAnhVan);
-    getchar(); // Xóa ký tự dòng mới từ bộ đệm đầu vào
+    getchar();
 }
 
 // Hàm hiển thị thông tin của một sinh viên
@@ -48,9 +48,9 @@ void hienThiDanhSachSinhVien() {
     if (soLuongSV == 0) {
         printf("Danh sach sinh vien rong.\n");
         return;}
-    printf("Danh sach sinh vien:\n");
+    printf("==Danh sach sinh vien:==\n");
     for (int i = 0; i < soLuongSV; ++i) {
-        printf("===Sinh vien thu %d:===\n", i + 1);
+        printf("-Sinh vien thu %d:\n", i + 1);
         hienThiThongTinSinhVien(danhSachSV[i]);
         printf("\n");
     }
@@ -61,14 +61,14 @@ void timKiemSinhVien(char maSV[]) {
     int found = 0;
     for (int i = 0; i < soLuongSV; ++i) {
         if (strcmp(danhSachSV[i].maSV, maSV) == 0) {
-            printf("Thong tin cua sinh vien co ma so %s:\n", maSV);
+            printf("-Thong tin cua sinh vien co ma so %s:\n", maSV);
             hienThiThongTinSinhVien(danhSachSV[i]);
             found = 1;
             break;
         }
     }
     if (!found) {
-        printf("Khong tim thay sinh vien co ma so %s\n", maSV);
+        printf("-Khong tim thay sinh vien co ma so %s-\n", maSV);
     }
 }
 
@@ -76,13 +76,13 @@ void timKiemSinhVien(char maSV[]) {
 void suaThongTinSinhVien(char maSV[]) {
     for (int i = 0; i < soLuongSV; ++i) {
         if (strcmp(danhSachSV[i].maSV, maSV) == 0) {
-            printf("Nhap thong tin moi cho sinh vien:\n");
+            printf("-Nhap thong tin moi cho sinh vien:\n");
             nhapThongTinSinhVien(&danhSachSV[i]);
-            printf("Da cap nhat thong tin cho sinh vien co ma so %s\n", maSV);
+            printf("-Da cap nhat thong tin cho sinh vien co ma so %s-\n", maSV);
             return;
         }
     }
-    printf("Khong tim thay sinh vien co ma so %s\n", maSV);
+    printf("-Khong tim thay sinh vien co ma so %s-\n", maSV);
 }
 
 // Hàm xóa thông tin của một sinh viên dựa trên Mã số sinh viên
@@ -95,12 +95,12 @@ void xoaSinhVien(char maSV[]) {
                 danhSachSV[j] = danhSachSV[j + 1];
             }
             soLuongSV--;
-            printf("Da xoa sinh vien co ma so %s\n", maSV);
+            printf("-Da xoa sinh vien co ma so %s-\n", maSV);
             break;
         }
     }
     if (!found) {
-        printf("Khong tim thay sinh vien co ma so %s\n", maSV);
+        printf("-Khong tim thay sinh vien co ma so %s-\n", maSV);
     }
 }
 
@@ -122,27 +122,25 @@ float tinhDiemTrungBinhDanhSach() {
 void luuDanhSachSinhVienVaoFile(char *tenFile) {
     FILE *file = fopen(tenFile, "w");
     if (file == NULL) {
-        printf("Khong mo duoc file de ghi!\n");
+        printf("-Khong mo duoc file de ghi!-\n");
         return;
     }
-    fprintf(file, "===Danh sach sinh vien:===\n");
     for (int i = 0; i < soLuongSV; i++) {
-        fprintf(file, "-Sinh vien %d:\n", i + 1);
-        fprintf(file, "Ho ten: %s\n", danhSachSV[i].hoTen);
-        fprintf(file, "Ma so sinh vien: %s\n", danhSachSV[i].maSV);
-        fprintf(file, "Diem Toan: %.2f\n", danhSachSV[i].diemToan);
-        fprintf(file, "Diem Van: %.2f\n", danhSachSV[i].diemVan);
-        fprintf(file, "Diem Anh Van: %.2f\n", danhSachSV[i].diemAnhVan);
+        fprintf(file, "%s\n", danhSachSV[i].hoTen);
+        fprintf(file, "%s\n", danhSachSV[i].maSV);
+        fprintf(file, "%.2f\n", danhSachSV[i].diemToan);
+        fprintf(file, "%.2f\n", danhSachSV[i].diemVan);
+        fprintf(file, "%.2f\n", danhSachSV[i].diemAnhVan);
     }
     fclose(file);
-    printf("Da luu danh sach sinh vien vao file %s\n", tenFile);
+    printf("-Da luu danh sach sinh vien vao file %s-\n", tenFile);
 }
 
 // Hàm đọc danh sách sinh viên từ một file văn bản
 void docDanhSachSinhVienTuFile(char *tenFile) {
     FILE *file = fopen(tenFile, "r");
     if (file == NULL) {
-        printf("Khong mo duoc file de doc!\n");
+        printf("-Khong mo duoc file de doc!-\n");
         return;
     }
         while (fscanf(file, "%[^\n]%*c", danhSachSV[soLuongSV].hoTen) != EOF) {
@@ -151,14 +149,15 @@ void docDanhSachSinhVienTuFile(char *tenFile) {
                &danhSachSV[soLuongSV].diemVan,
                &danhSachSV[soLuongSV].diemAnhVan);
         soLuongSV++;
-    } 
-    
+    }  
+
+
     fclose(file);
-    printf("Da doc danh sach sinh vien tu file %s\n", tenFile);
+    printf("-Da doc danh sach sinh vien tu file %s-\n", tenFile);
 }
 void clearScreen() {
     system("clear"); // On Linux and MacOS
-    // system("cls"); // On Windows
+    // system("cls"); // On Windows 
 }
 
 
@@ -167,6 +166,7 @@ int main() {
     char maSV[10];
     char tenFile[50];
     char exitChoice;
+
 
     do {
         clearScreen();
